@@ -18,9 +18,26 @@ $(document).ready(function(){
 
 $("#chatlink").on('change click keyup', function(){
 //	console.log(VtoC($(this).val()));
+	var dataset = 6;
+	var binnum = "";
+	var decnum = "";
+	var bindata = new Array(dataset);
+	var decdata = new Array(dataset);
 	for (var i = 0; i < $(this).val().length; i++) {
-//		console.log($(this).val().substr(i,1));
+		var nowchar = CtoV($(this).val().substr(i,1));
+		if (nowchar >= 0) {
+//			console.log(padleft(parseInt(nowchar).toString(2),6));
+			binnum += padleft(parseInt(nowchar).toString(2),6);
+			decnum += nowchar.toString();
+		}
 	}
+//	console.log(binnum);
+	for (var j = 0; j < dataset; j++) {
+		bindata[j] = binnum.substr(j*8, 8);
+		decdata[j] = parseInt(bindata[j], 2);
+		console.log(decdata[j]);
+	}
+//	console.log(decnum);
 });
 
 function CtoV (input) {
@@ -78,6 +95,15 @@ function VtoC (input) {
 		default: return -1;
 	}
 }
+
+function padleft (YourNumber, OutputLength){
+    if (YourNumber.length >= OutputLength) {
+        return YourNumber;
+    } else {
+        return padleft("0" +YourNumber, OutputLength);
+    }
+}
+
 </script>
 </body>
 </html>
